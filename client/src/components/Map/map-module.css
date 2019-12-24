@@ -1,0 +1,30 @@
+.map-side{
+    width: 20em;
+    float: right;
+    margin: 1em;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+.markers{
+  
+    background-image: url('https://cdn1.iconfinder.com/data/icons/locations-6/48/1-512.png');
+    height:2em;
+    width: 2em;
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: -1000;
+
+}
+
+.out{
+    height:1em;
+    width: 1em;
+}
+
+.out-2{
+    height:.5em;
+    width: .5em;
+}

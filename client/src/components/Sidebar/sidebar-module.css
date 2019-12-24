@@ -1,0 +1,11 @@
+.sidebar{
+    color: red;
+    float: right;
+    margin: 1em;
+    padding: 1em;
+    background: lightblue;
+    border-radius: 0 .5em 0 .5em;
+    z-index: 2000;
+    height:400px;
+    overflow: scroll;
+}

@@ -1,0 +1,30 @@
+.register-login {
+    color: white;
+    float: right;
+}
+
+.underline--magical {
+    background-image: linear-gradient(120deg, #0993d3 0%, blue 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 0.2em;
+    background-position: 0 88%;
+    transition: background-size 0.15s ease-in;
+}
+
+.underline--magical:hover {
+    background-size: 100% 88%;
+}
+
+.links {
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    float: right;
+}
