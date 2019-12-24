@@ -242,6 +242,10 @@ textarea {
     color: lightgray;
 }
 
+.react-map{
+    z-index: -1000;
+
+}
 
 
 

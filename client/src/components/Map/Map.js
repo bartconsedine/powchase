@@ -10,7 +10,11 @@ import MountainInfo from '../MountainInfo'
 
 const Map = () => {
 
+    let dateObj = new Date(1577343600); 
+    let utcString = dateObj.toUTCString(); 
+    let time = utcString; 
 
+    console.log("time", time)
 
     const viewPortWidth = () => {
         if (window.innerWidth < 700) {
@@ -177,7 +181,7 @@ const Map = () => {
     return (
         <div className="App" >
             <ReactMapGL
-
+                className="react-map"
                 width={viewport.width}
                 height={viewport.height}
                 latitude={viewport.latitude}

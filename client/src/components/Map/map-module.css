@@ -15,7 +15,7 @@
     width: 2em;
     background-repeat: no-repeat;
     background-size: contain;
-    z-index: -1000;
+    z-index: -2000;
 
 }
 
@@ -27,4 +27,9 @@
 .out-2{
     height:.5em;
     width: .5em;
+}
+
+.filter-entered{
+    height:2em;
+    width: 2em;
 }
