@@ -5,6 +5,12 @@
     display: flex;
     flex-direction: column;
     z-index: 2000;
+    height: 1000;
+    margin:1em;
+    order:10;
+    height: 95%;
+    min-width: 15em;
+
 }
 
 .markers{
@@ -59,16 +65,6 @@
     height:100%;
 
 }
-
-.map-side{
-    order:10;
-  
-    height: 90%;
-    min-width: 15em;
-
-    /* justify-content: flex-end; */
-}
-
 .react-map{
 
     max-height: 100%;
@@ -91,3 +87,12 @@
 
 }
 
+
+@media only screen and (max-width: 700px) {
+    body {
+      background-color: lightblue;
+    }
+    .selected-container{
+        margin: 0;
+    }
+  }

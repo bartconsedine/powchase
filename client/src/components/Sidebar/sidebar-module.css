@@ -1,8 +1,7 @@
 .sidebar{
     color: rgb(1, 61, 77);
     font-size: .8em;
-    /* margin: 0 .5em;
-    padding: .5em; */
+    margin-bottom: 1em;
     background-color: rgba(1, 61, 77, 0.8);
     border-radius: 0;
     z-index: 2000;
@@ -10,7 +9,7 @@
     width:100%;
     display: flex;
     flex-direction: column;
-    height: 450px;
+    height: 50em;
     padding: 1em 0 1em 0;
 }
 

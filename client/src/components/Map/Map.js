@@ -86,6 +86,7 @@ const Map = () => {
         latitude: 38.2,
         longitude: -96.06,
         zoom: viewPortZoom(),
+        transitionDuration: null,
 
 
     });
@@ -111,15 +112,16 @@ const Map = () => {
             ...viewport,
             latitude: lat,
             longitude: lon,
-            zoom: 8.5,
-            transitionDuration: 5000
+            zoom: 7,
+            transitionDuration: 800, 
+            transitionInterpolator: new FlyToInterpolator({curve: 2}),
 
         }
         setViewport(newport)
 
         const clickedMarker = {
             ...popup,
-            latitude: lat,
+            latitude: lat,  
             longitude: lon,
             name: name,
             snowTotal: snowTotal,
@@ -224,6 +226,7 @@ const Map = () => {
     return (
         <div className="App" >
             <ReactMapGL
+                {...viewport}
                 className="react-map"
                 width={viewport.width}
                 height={viewport.height}
@@ -266,13 +269,14 @@ const Map = () => {
                             </div>
                         </div>
 
-                        {(popup.name) &&
+                        {(popup.name && viewWidthValue > 700) &&
                             <div className="selected-container">
                                 <Selected
                                     popup={popup}
                                     setPopup={setPopup}
                                     setViewport={setViewport}
                                     viewport={viewport}
+                                    viewWidthValue={viewWidthValue}
                                 />
 
                             </div>
@@ -308,13 +312,13 @@ const Map = () => {
                         }
                     >
 
-                        <div>{popup.name}</div>
+                        <div><strong>{popup.name}</strong></div>
                         <div>7 Day Snow Forecast:<strong> {popup.snowForecast.reduce((a, b) => a + b, 0)}"</strong></div>
 
                     </Popup>}
 
             </ReactMapGL>
-            {(popup.name) &&
+            {(popup.name && viewWidthValue < 700)  &&
                         <div className="selected-container sc-mobile">
                             <Selected
                                 popup={popup}

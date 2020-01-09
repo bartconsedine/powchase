@@ -6,10 +6,6 @@ import { render } from 'react-dom'
 
 const Selected = (props) => {
 
-    console.log(props)
-
-
-
     const renderForecast = () => {
         return (
             props.popup.snowForecast.map((item, index) => {
@@ -33,42 +29,54 @@ const Selected = (props) => {
 
     return (
         <div className="selected">
-            <div className="popup-content">
-                <div className="popup-name">
-                    {props.popup.name}
-                </div>
-                <div className="forecast">
-                    <div>FORECAST:   </div>
-                    <div className="snow-by-day">
-                        {renderForecast()}
+            {props.viewWidthValue > 700 &&
+                <div className="popup-content">
+                    <div className="popup-name">
+                        <strong>{props.popup.name}</strong>
+                    </div>
+                    <div className="forecast">
+                        <div>FORECAST:   </div>
+                        <div className="snow-by-day">
+                            {renderForecast()}
+                        </div>
+
                     </div>
 
                 </div>
+            }
 
-            </div>
-            <div className="close-button">
-                <button onClick={() => {
-                    const clickedMarker = {
-                        latitude: null,
-                        longitude: null,
-                        name: null
+                
+                
+            
 
+            {props.viewWidthValue > 700 &&
+                <div className="close-button">
+                    {props.viewWidthValue < 700 && <div>FORECAST:   </div>}
+                    <button className="close-btn" onClick={() => {
+                        const clickedMarker = {
+                            latitude: null,
+                            longitude: null,
+                            name: null
+
+                        }
+                        props.setPopup(clickedMarker)
+                        const zoomValue = (props.viewport.zoom > 7 ? 7 : props.viewport.zoom)
+
+                        const newport = {
+                            ...props.viewport,
+                            zoom: zoomValue,
+
+                        }
+                        props.setViewport(newport)
                     }
-                    props.setPopup(clickedMarker)
-                    const zoomValue = (props.viewport.zoom > 7 ? 7 : props.viewport.zoom)
-
-                    const newport = {
-                        ...props.viewport,
-                        zoom: zoomValue,
-
                     }
-                    props.setViewport(newport)
-                }
-                }
-                >
-                    Close
+                    >
+                        Close
                 </button>
-            </div>
+                </div>
+            }
+
+                
         </div>
     )
 }
