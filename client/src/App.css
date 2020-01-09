@@ -113,7 +113,7 @@
 }
 
 .filter-nav {
-    background-color: #0993d3;
+    background-color: rgb(1, 61, 77);
     display: flex;
     padding: 20px;
     justify-content: flex-end;
@@ -242,6 +242,10 @@ textarea {
     color: lightgray;
 }
 
+.react-map{
+    z-index: -1000;
+
+}
 
 
 

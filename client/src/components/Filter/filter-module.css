@@ -1,0 +1,29 @@
+.filters {
+    
+    background-color: rgba(1, 61, 77, 0.8);
+    font-size: .8em;
+
+}
+
+.slider {
+    color: white;
+
+    padding:.5em 1em;
+
+}
+
+.filters-div{
+
+    width:100%;
+}
+
+.range-slider{
+    color:red;
+    border: 5px solid red;
+    
+}
+
+.filter-only{
+    padding: 1em;
+}
+
