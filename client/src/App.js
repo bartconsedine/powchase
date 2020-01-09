@@ -59,13 +59,13 @@ class App extends Component {
       .then(response => this.setState({ allExcerpts: response }))
       .catch(error => console.log(error));
     const filteredExcerpt = this.state.allExcerpts.filter((item) => item.author === this.state.filterData.author && item.title === this.state.filterData.title && item.chapter === this.state.filterData.chapter)
-    await this.setState({
-      excerptData: {
-        ...filteredExcerpt[0]
-      }
-    })
+    // await this.setState({
+    //   excerptData: {
+    //     ...filteredExcerpt[0]
+    //   }
+    // })
 
-    this.setState({ showNav: true })
+    // this.setState({ showNav: true })
   }
 
 
@@ -172,20 +172,13 @@ class App extends Component {
 
     return (
       <div className="App">
-        {this.state.showNav && <div className="header">
+        {/* {this.state.showNav && <div className="header">
           <span >
             {this.state.currentUser && this.loginRender()}
           </span>
 
           <div className="filter-nav">
-            {/* <div>
-              <Filter
-                handleFilterSubmit={this.handleFilterSubmit}
-                handleFilterChange={this.handleFilterChange}
-                filterData={this.state.filterData}
-                allExcerpts={this.state.allExcerpts}
-              />
-            </div> */}
+            
             <div className="register-login-div">
               <Nav
                 currentUser={this.state.currentUser}
@@ -198,11 +191,13 @@ class App extends Component {
 
 
           </div>
-          <div>
+          
+
+        </div>} */}
+
+        <div>
             <Map />
           </div>
-
-        </div>}
         <Route exact path="/" to="/" />
 
         <Route exact path="/register" render={() => (
@@ -215,21 +210,6 @@ class App extends Component {
             currentUser={this.state.currentUser}
           />)}
         />
-        {/* <Route exact path="/custom" render={() => (
-          <ChunkCustom
-            handleRegister={this.handleRegister}
-            handleFormChange={this.handleFormChange}
-            handleChange={this.authHandleChange}
-            formData={this.state.authFormData}
-            currentUser={this.state.currentUser}
-            excerptData={this.state.excerptData}
-            navToggle={this.navToggle}
-            showNav={this.state.showNav}
-            filterData={this.state.filterData}
-            multiplier={this.state.multiplier}
-            
-          />)}
-        /> */}
         <Route exact path="/login" render={() => (
           <Login
             handleRegister={this.handleRegister}

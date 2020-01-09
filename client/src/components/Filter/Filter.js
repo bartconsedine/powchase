@@ -1,22 +1,42 @@
-import React from 'react'
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import './filter-module.css'
+import Slider from './Slider';
 
-const Filter = (props) => {
 
-    return (
-        <div>
-            <form>
-                <div></div>
-                <label>Name:</label>
-                <input 
-                    type="text"
-                    name="name" 
-                    onChange={props.handleFilterChange}
-                    value={props.filter.name}
-                    /> 
-                    <div></div>
-            </form>
-        </div>
-    )
+
+function valuetext(value) {
+    return `${value}°C`;
 }
 
-export default Filter
+export default function RangeSlider(props) {
+
+
+    return (
+        <div className="filters-div">
+            <div className="filters slider">
+                <Slider
+
+                    value={props.value}
+                    onChange={props.handleSliderChange}
+                    valueLabelDisplay="auto"
+                    aria-labelledby="range-slider"
+                    getAriaValueText={valuetext}
+                    tempValue={props.tempValue} 
+                    tempChange={props.handleTempChange}
+                />
+
+            </div>
+
+            <form className="filters filter-only">
+                <label>name: </label>
+                <input
+                    type="text"
+                    onChange={props.handleFilterChange}
+                    value={props.filter.name}
+                    name="name"
+                />
+            </form>
+        </div>
+    );
+}

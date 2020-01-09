@@ -11,16 +11,32 @@ const Sidebar = (props) => {
         return (
             props.MountainInfo.map((item) => {
                 return (
-                    item[0].includes(props.filter.name) && <div>
-                        <div>{item[0]}</div>
-                        <button onClick={async (e) => {
+                    (
+                       props.filter.name == item[0].toLowerCase().includes(props.filter.name.toLowerCase())  || 
+                        (item[0].toLowerCase().includes(props.filter.name.toLowerCase())
+                        && item[5].reduce((a, b) => a + b, 0) >= props.value[0]
+                        && item[5].reduce((a, b) => a + b, 0) <= props.value[1]
+                        && item[4] >= props.tempValue[0]
+                        && item[4] <= props.tempValue[1])
+                        )
+                    &&
+                    <div className="sidebar-row">
+                        <div className="sidebar-name">{item[0]}</div>
+                        <div className="sidebar-button">
+                        <button
+                            className="sidebar-button-element"
+                            onClick={async (e) => {
+                                e.preventDefault()
                                 props.markerClickedHandler(
                                     parseFloat(item[1]),
                                     parseFloat(item[2]),
-                                    item[0]
-                                    )
+                                    item[0],
+                                    item[3], 
+                                    item[5]
+                                )
                                 console.log("clicked")
-                            }}>button</button>
+                            }}>view</button>
+                            </div>
                     </div>
                 )
 
@@ -34,13 +50,7 @@ const Sidebar = (props) => {
 
     return (
         <div className="sidebar">
-            <div>
-
-            </div>
-            <div>
             {sideBarInfo()}
-            </div>
-
         </div>
     )
 
