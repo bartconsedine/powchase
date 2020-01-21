@@ -91,6 +91,14 @@ const Map = () => {
 
     });
 
+    const [markerHover, setMarkerHover] = useState(null)
+
+    const handleMarkerHover = (name) => {
+        console.log("marker hovered")
+        setMarkerHover(name)
+
+    }
+
     const zoomChange = (value) => {
         const newport = {
             ...viewport,
@@ -106,7 +114,7 @@ const Map = () => {
     }
 
     const markerClickedHandler = (lat, lon, name, snowTotal, snowForecast) => {
-
+        setMarkerHover(null)
         console.log("clicked")
         const newport = {
             ...viewport,
@@ -133,6 +141,12 @@ const Map = () => {
 
     }
 
+    const divStyle = (total) => {
+        
+        return(
+            {backgroundColor: `rgb(0,${255-total*12},255)`}
+        )
+      };
 
     const renderMarkers = () => {
         return (
@@ -149,6 +163,7 @@ const Map = () => {
                             latitude={parseFloat(item[1])}
                             longitude={parseFloat(item[2])}
                             // offsetLeft={-20} offsetTop={-10}
+                           
                             onClick={async (e) => {
                                 markerClickedHandler(
                                     parseFloat(item[1]),
@@ -156,10 +171,15 @@ const Map = () => {
                                     item[0]
                                 )
 
-                            }}
+                            }
+                            
+                        }
                         >
                         <div
                             className={`markers ${viewport.zoom > 8 ? "" : (viewport.zoom < 5 ? "out-2" : " out")}`}
+                            style={divStyle(item[5].reduce((a, b) => a + b, 0))}
+                            onMouseOver={() => handleMarkerHover(item[0])}
+                            onMouseOut={() => setMarkerHover(null)}
                             onClick={async (e) => {
                                 markerClickedHandler(
                                     parseFloat(item[1]),
@@ -171,6 +191,7 @@ const Map = () => {
 
                             }}
                         >
+                            {/* {markerHover == item[0] &&  <div className="marker-span">{item[0]}</div>} */}
 
                         </div>
 
@@ -318,7 +339,7 @@ const Map = () => {
                     </Popup>}
 
             </ReactMapGL>
-            {(popup.name && viewWidthValue < 700)  &&
+            {(popup.name && viewWidthValue < 700 && false)  &&
                         <div className="selected-container sc-mobile">
                             <Selected
                                 popup={popup}
