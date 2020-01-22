@@ -1,8 +1,14 @@
 require 'dark_sky'
 class RequestController < ApplicationController
   def index
-    @request = DarkSky.make_request("37.82", "-122.423")
+    @ski_areas = SkiArea.all
+    @data = []
+    @ski_areas.each do |area|
+      @data.push(DarkSky.make_request(area.latitude, area.longitude))
+    end
 
-    render json: @request
+    respond_to do |format|
+      format.json {render json: @data}
+    end
   end
 end
