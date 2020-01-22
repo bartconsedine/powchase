@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_22_164152) do
+ActiveRecord::Schema.define(version: 2020_01_22_212139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "ski_areas", force: :cascade do |t|
     t.string "ski_area_name"
-    t.integer "latitude"
-    t.integer "longitude"
+    t.float "latitude"
+    t.float "longitude"
     t.string "address"
     t.string "pass"
     t.string "site_url"
