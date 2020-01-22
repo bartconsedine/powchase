@@ -13,18 +13,19 @@ module DarkSky
     end
 
     def parse_request(body)
-      # puts body
+      # p body
       data = {}
       data[:latitude] = body['latitude'].to_f
       data[:longitude] = body['longitude'].to_f
       data[:time] = body['currently']['time']
       data[:summary] = body['currently']['summary']
       data[:icon] = body['currently']['icon']
-      data[:sunrise_time] = body['currently']['time']
-      puts data
+      # data[:sunrise_time] = body['']['time']
+      # puts data
       body
     end
   end
 end
 
-# DarkSky.make_request(30, -20)
+# DarkSky.make_request(30.244, -20.30)
+
