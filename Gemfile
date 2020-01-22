@@ -19,7 +19,7 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'rack-cors'
 gem 'pg'
-
+gem 'httparty'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
