@@ -33,7 +33,7 @@ export default function RangeSlider(props) {
       </Typography>
       <Slider
         value={props.value}
-        onChange={props.onChange}
+        onChange={props.handleSliderChange}
         valueLabelDisplay="auto"
         aria-labelledby="range-slider"
         getAriaValueText={() => valuetext(props.value)}
@@ -52,6 +52,19 @@ export default function RangeSlider(props) {
         max={50}
         // valueLabelFormat={() => valuetext(props.value)}
       />
+      <Typography id="range-slider" gutterBottom>
+        Max-Temp: {props.tempValue[0]}&#176;f - {props.tempValue[1]}&#176;f
+      </Typography>
+      <Slider
+        value={props.tempValue}
+        onChange={props.tempChange}
+        valueLabelDisplay="auto"
+        aria-labelledby="range-slider"
+        getAriaValueText={() => valuetext(props.tempValue)}
+        max={50}
+        // valueLabelFormat={() => valuetext(props.value)}
+      />
+      
     </div>
   );
 }

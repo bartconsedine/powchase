@@ -5,6 +5,7 @@ import Sidebar from '../Sidebar/Sidebar'
 import Zoom from '../Zoom/Zoom'
 import Filter from '../Filter/Filter'
 import Selected from '../Selected/Selected'
+import SelectedMobile from '../Selected/SelectedMobile'
 import './map-module.css'
 import MountainInfo from '../MountainInfo'
 import d3 from 'd3';
@@ -46,6 +47,7 @@ const Map = () => {
 
     const handleSliderChange = (event, newValue) => {
         setValue(newValue);
+        console.log("slider")
     };
 
     const handleTempChange = (event, newValue) => {
@@ -162,7 +164,6 @@ const Map = () => {
                             key={index}
                             latitude={parseFloat(item[1])}
                             longitude={parseFloat(item[2])}
-                            // offsetLeft={-20} offsetTop={-10}
                            
                             onClick={async (e) => {
                                 markerClickedHandler(
@@ -204,15 +205,6 @@ const Map = () => {
         )
     }
 
-    const showMarkers = () => {
-
-        return (
-
-            renderMarkers()
-        )
-
-
-    }
 
     const changeViewPort = () => {
 
@@ -260,8 +252,7 @@ const Map = () => {
                 dragPan={mapStatic}
                 scrollZoom={mapStatic}
             >
-
-                {showMarkers()}
+                {renderMarkers()}
                 {viewWidthValue > 700 &&
                     <div className="side-selected">
 
@@ -339,9 +330,9 @@ const Map = () => {
                     </Popup>}
 
             </ReactMapGL>
-            {(popup.name && viewWidthValue < 700 && false)  &&
+            {(popup.name && viewWidthValue < 700)  &&
                         <div className="selected-container sc-mobile">
-                            <Selected
+                            <SelectedMobile
                                 popup={popup}
                                 setPopup={setPopup}
                                 setViewport={setViewport}

@@ -1,6 +1,5 @@
 import React from 'react'
 import './selected-module.css'
-import { render } from 'react-dom'
 
 
 
@@ -39,19 +38,9 @@ const Selected = (props) => {
                         <div className="snow-by-day">
                             {renderForecast()}
                         </div>
+                       
 
                     </div>
-
-                </div>
-            }
-
-                
-                
-            
-
-            {props.viewWidthValue > 700 &&
-                <div className="close-button">
-                    {props.viewWidthValue < 700 && <div>FORECAST:   </div>}
                     <button className="close-btn" onClick={() => {
                         const clickedMarker = {
                             latitude: null,
@@ -73,10 +62,18 @@ const Selected = (props) => {
                     >
                         Close
                 </button>
+
+
                 </div>
             }
 
-                
+
+
+
+
+
+
+
         </div>
     )
 }
