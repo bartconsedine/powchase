@@ -1,0 +1,2 @@
+class SkiArea < ApplicationRecord
+end
