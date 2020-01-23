@@ -21,11 +21,21 @@ module DarkSky
       data[:summary] = body['currently']['summary']
       data[:icon] = body['currently']['icon']
       # data[:sunrise_time] = body['']['time']
-      # puts data
-      body
+      puts data
+      # body
+      format_week(body['daily']['data'])
+    end
+    
+     
+  def format_week(week)
+    week.each do |day|
+      puts day
     end
   end
+  end
+ 
+  
 end
 
-# DarkSky.make_request(30.244, -20.30)
+DarkSky.make_request(30.244, -20.30)
 
