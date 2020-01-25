@@ -19,6 +19,9 @@ const Selected = (props) => {
                     <div className="sf-column">
                         <div className="sf-day">{month + 1}/{day}/{year}</div>
                         <div className="sf-total">{item}"</div>
+                        <div className="weather-icon">
+                            
+                        </div>
                     </div>
                 )
 
@@ -30,11 +33,14 @@ const Selected = (props) => {
         <div className="selected">
             {props.viewWidthValue > 700 &&
                 <div className="popup-content">
+                    <div className="forecast-logo">
+    
+                    </div>
                     <div className="popup-name">
                         <strong>{props.popup.name}</strong>
                     </div>
                     <div className="forecast">
-                        <div>FORECAST:   </div>
+                        {/* <div>FORECAST:   </div> */}
                         <div className="snow-by-day">
                             {renderForecast()}
                         </div>

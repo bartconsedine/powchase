@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import '../../../src/App.css';
 import ReactMapGL, { Popup, Marker, FlyToInterpolator } from 'react-map-gl';
 import Sidebar from '../Sidebar/Sidebar'
-import Zoom from '../Zoom/Zoom'
 import Filter from '../Filter/Filter'
 import Selected from '../Selected/Selected'
 import SelectedMobile from '../Selected/SelectedMobile'
