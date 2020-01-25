@@ -1,27 +1,27 @@
 require 'httparty'
-require 'json'
 require 'date'
 
 module DarkSky
   class << self
     API_KEY = "433344de7c77dc31d5f56c5c61e45ea7"
     URL = "https://api.darksky.net/forecast"
-    def make_request(lat, lon)
+    def make_request(lat, lon, id, name)
       request_url = "#{URL}/#{API_KEY}/#{lat},#{lon}"
       response = HTTParty.get(request_url)
-      # @res_body = JSON.parse response.body, symbolize_name: true
-      parse_request(response.parsed_response)
+      parse_request(response.parsed_response, id, name)
     end
 
-    def parse_request(body)
-      # p body
+    def parse_request(body, id, name)
       data = {}
+      data[:ski_area_name] = name
+      data[:tracking_id] = id
       data[:latitude] = body['latitude'].to_f
       data[:longitude] = body['longitude'].to_f
       data[:time] = format_time(body['currently']['time'])
       data[:summary] = body['currently']['summary']
       data[:icon] = body['currently']['icon']
       data[:week_forcast] = format_week(body['daily']['data'])
+      puts data
     end
     
     def format_time(time)
@@ -34,12 +34,23 @@ module DarkSky
         hash = {}
         time = format_time(day['time'])
         hash[:date] = time
+        hash[:icon] = day['icon']
+        hash[:daily_summary] = day['summary']
+        hash[:sunrise_time] = day['sunriseTime']
+        hash[:sunset_time] = day['sunsetTime']
+        hash[:precip_probability] = day['precipProbability']
+        hash[:precip_type] = day['precipType'] || 'none expected'
+        hash[:precip_accumulation] = day['precipAccumulation'] || 0
+        hash[:temperature_high] = day['temperatureHigh']
+        hash[:temperature_low] = day['temperatureLow']
+        hash[:humidity] = day['humidity']
+        hash[:wind_speed] = day['windSpeed']
         week_forcast.push(hash)
       end
-      puts week_forcast
+      week_forcast
     end 
   end
 end
 
-DarkSky.make_request(30.244, -20.30)
+DarkSky.make_request(30.244, -20.30, 0, 'My Moutain')
 
