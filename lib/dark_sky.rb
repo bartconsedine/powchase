@@ -1,5 +1,5 @@
 require 'httparty'
-require 'date'
+require_relative 'time_format'
 
 module DarkSky
   class << self
@@ -17,25 +17,22 @@ module DarkSky
       data[:tracking_id] = id
       data[:latitude] = body['latitude'].to_f
       data[:longitude] = body['longitude'].to_f
-      data[:time] = format_time(body['currently']['time'])
+      data[:time] = TimeFormat.format_time(body['currently']['time'])
       data[:summary] = body['currently']['summary']
       data[:icon] = body['currently']['icon']
       data[:week_forcast] = format_week(body['daily']['data'])
-      puts data
+      data
     end
-    
-    def format_time(time)
-      Date.strptime(time.to_s,'%s').strftime('%m/%d/%Y')
-    end
-    
+
     def format_week(week)
       week_forcast = []
       week.each do |day|
         hash = {}
-        time = format_time(day['time'])
-        hash[:date] = time
+        date = TimeFormat.format_time(day['time'])
+        hash[:formatted_date] = date
+        hash[:time] = day['time']
         hash[:icon] = day['icon']
-        hash[:daily_summary] = day['summary']
+        hash[:summary] = day['summary']
         hash[:sunrise_time] = day['sunriseTime']
         hash[:sunset_time] = day['sunsetTime']
         hash[:precip_probability] = day['precipProbability']
@@ -48,9 +45,8 @@ module DarkSky
         week_forcast.push(hash)
       end
       week_forcast
-    end 
+    end
   end
 end
 
-DarkSky.make_request(30.244, -20.30, 0, 'My Moutain')
-
+# DarkSky.make_request(30.244, -20.30, 0, 'My Moutain')
