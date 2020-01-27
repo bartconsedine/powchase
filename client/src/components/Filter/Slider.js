@@ -28,12 +28,13 @@ export default function RangeSlider(props) {
 
   return (
     <div className="slider">
+      {/* <button onClick={() => props.setShowLabels(!props.showLabels)}>toggle labels</button> */}
       <Typography id="range-slider" gutterBottom>
         Snowfall range: {props.value[0]}" - {props.value[1]}"
       </Typography>
       <Slider
         value={props.value}
-        onChange={props.onChange}
+        onChange={props.handleSliderChange}
         valueLabelDisplay="auto"
         aria-labelledby="range-slider"
         getAriaValueText={() => valuetext(props.value)}
@@ -52,6 +53,8 @@ export default function RangeSlider(props) {
         max={50}
         // valueLabelFormat={() => valuetext(props.value)}
       />
+      
+      
     </div>
   );
 }

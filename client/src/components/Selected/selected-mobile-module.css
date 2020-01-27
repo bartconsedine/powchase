@@ -1,0 +1,79 @@
+.selected-mobile {
+    color: white;
+    /* margin: 1em;
+    padding: 1em; */
+    background-color: rgba(1, 61, 77, 0.8);
+    overflow: hidden;
+    max-width: 90%;
+    height:10em;
+    padding:1em;
+    
+    /* display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    text-align: left; */
+}
+
+.forecast-m{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1em;
+}
+
+.popup-content-m{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 1em;
+    margin:1em;
+}
+
+.close-button-m{
+    margin: 1em;
+    display:inline-block;
+    color:red;
+    
+
+}
+
+.close-button-div{
+    margin-left:auto;
+    float:right;
+
+}
+
+.popup-name-m{
+    font-size: 1.5em;
+    text-align: left;
+}
+
+.snow-by-day-m{
+    display: flex;
+    flex-direction: row;
+    /* padding: 1em; */
+}
+
+.sf-day-m{
+    color:white;
+    padding: 0 1em 0 1em;
+    font-size: .5em;
+
+}
+
+.sf-total-m{
+    color:white;
+    padding: 0 1em 0 1em;
+    text-align: center;
+    font-size: 1.5em;
+    vertical-align: baseline;
+}
+
+.sf-column-m{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+

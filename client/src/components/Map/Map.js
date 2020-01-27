@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import '../../../src/App.css';
 import ReactMapGL, { Popup, Marker, FlyToInterpolator } from 'react-map-gl';
 import Sidebar from '../Sidebar/Sidebar'
-import Zoom from '../Zoom/Zoom'
+import GeoToggle from '../GeoToggle/GeoToggle'
 import Filter from '../Filter/Filter'
 import Selected from '../Selected/Selected'
+import SelectedMobile from '../Selected/SelectedMobile'
 import './map-module.css'
 import MountainInfo from '../MountainInfo'
 import * as d3 from 'd3';
@@ -44,8 +45,11 @@ const Map = () => {
 
     const [tempValue, setTempValue] = React.useState([0, 32]);
 
+    const [showLabels, setShowLabels] = useState(false)
+
     const handleSliderChange = (event, newValue) => {
         setValue(newValue);
+        console.log("slider")
     };
 
     const handleTempChange = (event, newValue) => {
@@ -94,7 +98,7 @@ const Map = () => {
     const [markerHover, setMarkerHover] = useState(null)
 
     const handleMarkerHover = (name) => {
-        console.log("marker hovered")
+        // console.log("marker hovered")
         setMarkerHover(name)
 
     }
@@ -112,6 +116,8 @@ const Map = () => {
 
 
     }
+
+
 
     const markerClickedHandler = (lat, lon, name, snowTotal, snowForecast) => {
         setMarkerHover(null)
@@ -162,7 +168,7 @@ const Map = () => {
                             key={index}
                             latitude={parseFloat(item[1])}
                             longitude={parseFloat(item[2])}
-                            // offsetLeft={-20} offsetTop={-10}
+                           
 
                             onClick={async (e) => {
                                 markerClickedHandler(
@@ -192,7 +198,7 @@ const Map = () => {
                             }}
                         >
                             {/* {markerHover == item[0] &&  <div className="marker-span">{item[0]}</div>} */}
-
+                            {(viewport.zoom > 7 || showLabels  ) && <span className="marker-label" style={divStyle(item[5].reduce((a, b) => a + b, 0))}>{item[0]}</span>}
                         </div>
 
                     </Marker>
@@ -204,15 +210,6 @@ const Map = () => {
         )
     }
 
-    const showMarkers = () => {
-
-        return (
-
-            renderMarkers()
-        )
-
-
-    }
 
     const changeViewPort = () => {
 
@@ -259,9 +256,9 @@ const Map = () => {
                 onViewportChange={_onViewportChange}
                 dragPan={mapStatic}
                 scrollZoom={mapStatic}
+                minZoom={2}
             >
-
-                {showMarkers()}
+                {renderMarkers()}
                 {viewWidthValue > 700 &&
                     <div className="side-selected">
 
@@ -277,6 +274,8 @@ const Map = () => {
                                     handleSliderChange={handleSliderChange}
                                     tempValue={tempValue}
                                     handleTempChange={handleTempChange}
+                                    setShowLabels={setShowLabels}
+                                    showLabels={showLabels}
                                 />
                             </div>
                             <div>
@@ -290,7 +289,7 @@ const Map = () => {
                             </div>
                         </div>
 
-                        {(popup.name && viewWidthValue > 700) &&
+                        {( viewWidthValue > 700) &&
                             <div className="selected-container">
                                 <Selected
                                     popup={popup}
@@ -298,6 +297,10 @@ const Map = () => {
                                     setViewport={setViewport}
                                     viewport={viewport}
                                     viewWidthValue={viewWidthValue}
+                                />
+                                <GeoToggle
+                                    viewport={viewport}
+                                    setViewport={setViewport}
                                 />
 
                             </div>
@@ -339,9 +342,9 @@ const Map = () => {
                     </Popup>}
 
             </ReactMapGL>
-            {(popup.name && viewWidthValue < 700 && false)  &&
+            {(popup.name && viewWidthValue < 700)  &&
                         <div className="selected-container sc-mobile">
-                            <Selected
+                            <SelectedMobile
                                 popup={popup}
                                 setPopup={setPopup}
                                 setViewport={setViewport}

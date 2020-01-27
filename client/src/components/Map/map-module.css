@@ -1,11 +1,11 @@
 .map-side{
-    width: 15em;
+    width: 20em;
     float: right;
     /* padding: 1em; */
     display: flex;
     flex-direction: column;
     z-index: 2000;
-    height: 1000;
+
     margin:1em;
     order:10;
     height: 95%;
@@ -79,6 +79,7 @@
 
 .ms-mobile{
     width: 100%;
+    color:red;
     float: right;
     margin: 0;
     padding: 0;
@@ -94,6 +95,10 @@
     width:10em;
     z-index: -5;
     /* visibility: hidden; */
+}
+
+.marker-label{
+    color: white; background-color:rgba(0,0,0,.5);
 }
 
 

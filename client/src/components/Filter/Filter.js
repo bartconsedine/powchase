@@ -18,12 +18,14 @@ export default function RangeSlider(props) {
                 <Slider
 
                     value={props.value}
-                    onChange={props.handleSliderChange}
+                    handleSliderChange={props.handleSliderChange}
                     valueLabelDisplay="auto"
                     aria-labelledby="range-slider"
                     getAriaValueText={valuetext}
                     tempValue={props.tempValue} 
                     tempChange={props.handleTempChange}
+                    setShowLabels={props.setShowLabels}
+                    showLabels={props.showLabels}
                 />
 
             </div>
