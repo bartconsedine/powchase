@@ -29,6 +29,7 @@ const GeoToggle = (props) => {
 
     return (
         <div className="geo-toggle">
+            Go To Region:
             <div className="geo-list">
                 {showGeoToggles()}
             </div>

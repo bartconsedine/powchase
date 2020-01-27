@@ -197,7 +197,7 @@ const Map = () => {
                             }}
                         >
                             {/* {markerHover == item[0] &&  <div className="marker-span">{item[0]}</div>} */}
-                            {(viewport.zoom > 7 || showLabels  ) && <span className="marker-label">{item[0]}</span>}
+                            {(viewport.zoom > 7 || showLabels  ) && <span className="marker-label" style={divStyle(item[5].reduce((a, b) => a + b, 0))}>{item[0]}</span>}
                         </div>
 
                     </Marker>

@@ -2,14 +2,15 @@
     /* background-color: white; */
     text-align: left;
     padding:1em;
-    width:5em;
+    width:10em;
     background-color: rgba(1, 61, 77, 0.8);
     border-radius: 0 1em 0 1em;
+    color: white;
 }
 
 .geo-button{
     color: rgb(1, 61, 77);
     border-radius: .2em;
     width: 100%;
-    margin:.1em;
+    margin:.5em;
 }
