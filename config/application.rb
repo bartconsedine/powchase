@@ -33,6 +33,10 @@ module Powchase
     config.api_only = true
     config.app_generators.scaffold_controller = :scaffold_controller
 
+
+    # ActiveJob
+    config.active_job.queue_adapter = :sidekiq
+
     # Middleware for ActiveAdmin
     config.middleware.use Rack::MethodOverride
     config.middleware.use ActionDispatch::Flash

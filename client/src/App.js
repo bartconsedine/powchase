@@ -58,7 +58,7 @@ class App extends Component {
       .then(response => response.json())
       .then(response => this.setState({ allExcerpts: response }))
       .catch(error => console.log(error));
-    const filteredExcerpt = this.state.allExcerpts.filter((item) => item.author === this.state.filterData.author && item.title === this.state.filterData.title && item.chapter === this.state.filterData.chapter)
+    // const filteredExcerpt = this.state.allExcerpts.filter((item) => item.author === this.state.filterData.author && item.title === this.state.filterData.title && item.chapter === this.state.filterData.chapter)
     // await this.setState({
     //   excerptData: {
     //     ...filteredExcerpt[0]
@@ -178,7 +178,7 @@ class App extends Component {
           </span>
 
           <div className="filter-nav">
-            
+
             <div className="register-login-div">
               <Nav
                 currentUser={this.state.currentUser}
@@ -191,7 +191,7 @@ class App extends Component {
 
 
           </div>
-          
+
 
         </div>} */}
 
