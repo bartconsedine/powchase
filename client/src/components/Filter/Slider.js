@@ -28,6 +28,7 @@ export default function RangeSlider(props) {
 
   return (
     <div className="slider">
+      <button onClick={() => props.setShowLabels(!props.showLabels)}>toggle labels</button>
       <Typography id="range-slider" gutterBottom>
         Snowfall range: {props.value[0]}" - {props.value[1]}"
       </Typography>

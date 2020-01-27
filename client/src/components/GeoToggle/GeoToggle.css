@@ -1,0 +1,15 @@
+.geo-toggle{
+    /* background-color: white; */
+    text-align: left;
+    padding:1em;
+    width:5em;
+    background-color: rgba(1, 61, 77, 0.8);
+    border-radius: 0 1em 0 1em;
+}
+
+.geo-button{
+    color: rgb(1, 61, 77);
+    border-radius: .2em;
+    width: 100%;
+    margin:.1em;
+}

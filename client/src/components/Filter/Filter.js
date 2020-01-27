@@ -24,6 +24,8 @@ export default function RangeSlider(props) {
                     getAriaValueText={valuetext}
                     tempValue={props.tempValue} 
                     tempChange={props.handleTempChange}
+                    setShowLabels={props.setShowLabels}
+                    showLabels={props.showLabels}
                 />
 
             </div>

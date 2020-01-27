@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../../src/App.css';
 import ReactMapGL, { Popup, Marker, FlyToInterpolator } from 'react-map-gl';
 import Sidebar from '../Sidebar/Sidebar'
+import GeoToggle from '../GeoToggle/GeoToggle'
 import Filter from '../Filter/Filter'
 import Selected from '../Selected/Selected'
 import SelectedMobile from '../Selected/SelectedMobile'
@@ -43,6 +44,8 @@ const Map = () => {
     const [value, setValue] = React.useState([0, 21]);
 
     const [tempValue, setTempValue] = React.useState([0, 32]);
+
+    const [showLabels, setShowLabels] = useState(false)
 
     const handleSliderChange = (event, newValue) => {
         setValue(newValue);
@@ -95,7 +98,7 @@ const Map = () => {
     const [markerHover, setMarkerHover] = useState(null)
 
     const handleMarkerHover = (name) => {
-        console.log("marker hovered")
+        // console.log("marker hovered")
         setMarkerHover(name)
 
     }
@@ -113,6 +116,8 @@ const Map = () => {
 
 
     }
+
+
 
     const markerClickedHandler = (lat, lon, name, snowTotal, snowForecast) => {
         setMarkerHover(null)
@@ -192,7 +197,7 @@ const Map = () => {
                             }}
                         >
                             {/* {markerHover == item[0] &&  <div className="marker-span">{item[0]}</div>} */}
-
+                            {(viewport.zoom > 7 || showLabels  ) && <span style={{color: "white"}}>{item[0]}</span>}
                         </div>
 
                     </Marker>
@@ -250,6 +255,7 @@ const Map = () => {
                 onViewportChange={_onViewportChange}
                 dragPan={mapStatic}
                 scrollZoom={mapStatic}
+                minZoom={2}
             >
                 {renderMarkers()}
                 {viewWidthValue > 700 &&
@@ -267,6 +273,8 @@ const Map = () => {
                                     handleSliderChange={handleSliderChange}
                                     tempValue={tempValue}
                                     handleTempChange={handleTempChange}
+                                    setShowLabels={setShowLabels}
+                                    showLabels={showLabels}
                                 />
                             </div>
                             <div>
@@ -280,7 +288,7 @@ const Map = () => {
                             </div>
                         </div>
 
-                        {(popup.name && viewWidthValue > 700) &&
+                        {( viewWidthValue > 700) &&
                             <div className="selected-container">
                                 <Selected
                                     popup={popup}
@@ -288,6 +296,10 @@ const Map = () => {
                                     setViewport={setViewport}
                                     viewport={viewport}
                                     viewWidthValue={viewWidthValue}
+                                />
+                                <GeoToggle
+                                    viewport={viewport}
+                                    setViewport={setViewport}
                                 />
 
                             </div>
