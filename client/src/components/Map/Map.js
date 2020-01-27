@@ -8,7 +8,7 @@ import Selected from '../Selected/Selected'
 import SelectedMobile from '../Selected/SelectedMobile'
 import './map-module.css'
 import MountainInfo from '../MountainInfo'
-import d3 from 'd3';
+import * as d3 from 'd3';
 
 
 
@@ -127,7 +127,7 @@ const Map = () => {
             latitude: lat,
             longitude: lon,
             zoom: 7,
-            transitionDuration: 800, 
+            transitionDuration: 800,
             transitionInterpolator: new FlyToInterpolator({curve: 2}),
 
         }
@@ -135,7 +135,7 @@ const Map = () => {
 
         const clickedMarker = {
             ...popup,
-            latitude: lat,  
+            latitude: lat,
             longitude: lon,
             name: name,
             snowTotal: snowTotal,
@@ -148,7 +148,7 @@ const Map = () => {
     }
 
     const divStyle = (total) => {
-        
+
         return(
             {backgroundColor: `rgb(0,${255-total*12},255)`}
         )
@@ -169,6 +169,7 @@ const Map = () => {
                             latitude={parseFloat(item[1])}
                             longitude={parseFloat(item[2])}
                            
+
                             onClick={async (e) => {
                                 markerClickedHandler(
                                     parseFloat(item[1]),
@@ -177,7 +178,7 @@ const Map = () => {
                                 )
 
                             }
-                            
+
                         }
                         >
                         <div
@@ -382,7 +383,7 @@ const Map = () => {
                         </div>
                     </div>
 
-                  
+
 
                 </div>}
 

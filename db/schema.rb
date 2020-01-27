@@ -10,52 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_07_160857) do
+ActiveRecord::Schema.define(version: 2020_01_26_203422) do
 
-  create_table "active_admin_comments", force: :cascade do |t|
-    t.string "namespace"
-    t.text "body"
-    t.string "resource_type"
-    t.integer "resource_id"
-    t.string "author_type"
-    t.integer "author_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
-    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
-    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
-  end
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
-  create_table "admin_users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_admin_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
-  end
-
-  create_table "excerpts", force: :cascade do |t|
-    t.string "title"
-    t.string "author"
-    t.string "chapter"
-    t.text "excerpts"
+  create_table "ski_areas", force: :cascade do |t|
+    t.string "ski_area_name"
+    t.float "latitude"
+    t.float "longitude"
+    t.string "address"
+    t.string "pass"
+    t.string "site_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "username"
-    t.string "email"
-    t.string "password_digest"
-    t.integer "goal"
+  create_table "weather_reports", force: :cascade do |t|
+    t.integer "time"
+    t.string "summary"
+    t.string "icon"
+    t.integer "sunrise_time"
+    t.integer "sunset_time"
+    t.integer "precip_probability"
+    t.integer "precip_accumulation"
+    t.integer "temperature_high"
+    t.integer "temperature_low"
+    t.integer "humidity"
+    t.integer "wind_speed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "formatted_date"
+    t.bigint "ski_area_id"
+    t.string "precip_type"
+    t.index ["ski_area_id"], name: "index_weather_reports_on_ski_area_id"
   end
 
-  
-
+  add_foreign_key "weather_reports", "ski_areas"
 end

@@ -1,2 +1,0 @@
-class Mountain < ApplicationRecord
-end
