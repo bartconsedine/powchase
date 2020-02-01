@@ -7,7 +7,7 @@ module DarkSky
     API_KEY2 = "6e15dab33ec08ad91c1f018492b85912"
     URL = "https://api.darksky.net/forecast"
     def make_request(lat, lon, id, name)
-      request_url = "#{URL}/#{API_KEY2}/#{lat},#{lon}"
+      request_url = "#{URL}/#{API_KEY}/#{lat},#{lon}"
       response = HTTParty.get(request_url)
       parse_request(response.parsed_response, id, name)
     end

@@ -6,7 +6,7 @@ class FetchWeatherJob < ApplicationJob
 
   def perform(*args)
     # Do something later
-    @ski_areas = SkiArea.all.sample(3)
+    @ski_areas = SkiArea.all
     @ski_areas.each do |area|
       puts 'HERE'
       @response = DarkSky.make_request(area.latitude, area.longitude, area.id, area.ski_area_name)

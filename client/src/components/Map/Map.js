@@ -224,6 +224,11 @@ const Map = () => {
 
     useEffect(() => {
         window.addEventListener("resize", changeViewPort)
+    //     await window.fetch('http://localhost:3001/v1/report/index')
+    //   .then(response => response.json())
+    //   .then(response => this.setState({ allExcerpts: response }))
+    //   .catch(error => console.log(error));
+
     }, []);
 
     const _onViewportChange = viewport => {
