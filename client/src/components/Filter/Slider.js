@@ -38,7 +38,7 @@ export default function RangeSlider(props) {
         valueLabelDisplay="auto"
         aria-labelledby="range-slider"
         getAriaValueText={() => valuetext(props.value)}
-        max={21}
+        max={50}
         // valueLabelFormat={() => valuetext(props.value)}
       />
       <Typography id="range-slider" gutterBottom>

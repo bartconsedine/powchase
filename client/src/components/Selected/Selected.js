@@ -22,6 +22,9 @@ const Selected = (props) => {
                         <div className="weather-icon">
 
                         </div>
+                        <div>
+                            {props.popup.weatherIcons[index]}
+                        </div>
                     </div>
                 )
 

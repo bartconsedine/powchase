@@ -8,7 +8,7 @@ import Selected from '../Selected/Selected'
 import SelectedMobile from '../Selected/SelectedMobile'
 import './map-module.css'
 import MountainInfo from '../MountainInfo'
-import * as d3 from 'd3';
+import axios from 'axios';
 
 
 
@@ -41,7 +41,7 @@ const Map = () => {
 
     const [mapStatic, setMapStatic] = useState(true)
 
-    const [value, setValue] = React.useState([0, 21]);
+    const [value, setValue] = React.useState([0, 50]);
 
     const [tempValue, setTempValue] = React.useState([0, 32]);
 
@@ -69,7 +69,8 @@ const Map = () => {
         longitude: null,
         name: null,
         snowTotal: null,
-        snowForecast: []
+        snowForecast: [],
+        weatherIcons: []
     })
 
     const handleFilterChange = (e) => {
@@ -103,32 +104,31 @@ const Map = () => {
 
     }
 
-    const zoomChange = (value) => {
-        const newport = {
-            ...viewport,
-            zoom: viewport.zoom + value,
-            transitionDuration: 5000,
-            transitionInterpolator: new FlyToInterpolator(),
-            transitionEasing: d3.easeCubic,
+    // const zoomChange = (value) => {
+    //     const newport = {
+    //         ...viewport,
+    //         zoom: viewport.zoom + value,
+    //         transitionDuration: 5000,
+    //         transitionInterpolator: new FlyToInterpolator(),
 
-        }
-        setViewport(newport)
-
-
-    }
+    //     }
+    //     setViewport(newport)
 
 
+    // }
 
-    const markerClickedHandler = (lat, lon, name, snowTotal, snowForecast) => {
-        setMarkerHover(null)
-        console.log("clicked")
+
+
+    const markerClickedHandler = (lat, lon, name, snowTotal, snowForecast, icons) => {
+      
+      
         const newport = {
             ...viewport,
             latitude: lat,
             longitude: lon,
             zoom: 7,
             transitionDuration: 800,
-            transitionInterpolator: new FlyToInterpolator({curve: 2}),
+            transitionInterpolator: new FlyToInterpolator({ curve: 2 }),
 
         }
         setViewport(newport)
@@ -139,69 +139,146 @@ const Map = () => {
             longitude: lon,
             name: name,
             snowTotal: snowTotal,
-            snowForecast: snowForecast
+            snowForecast: snowForecast,
+            weatherIcons: icons
 
 
         }
         setPopup(clickedMarker)
 
+
     }
 
     const divStyle = (total) => {
 
-        return(
-            {backgroundColor: `rgb(0,${255-total*12},255)`}
+        return (
+            { backgroundColor: `rgb(0,${255 - total * 12},255)` }
         )
-      };
+    };
+
+    // const renderMarkers = () => {
+    //     return (
+    //         MountainInfo.map((item, index) => {
+
+    //             return (
+    //                 (item[0].toLowerCase().includes(filter.name.toLowerCase())
+    //                     && item[5].reduce((a, b) => a + b, 0) >= value[0]
+    //                     && item[5].reduce((a, b) => a + b, 0) <= value[1]
+    //                     && item[4] >= tempValue[0]
+    //                     && item[4] <= tempValue[1]) && <Marker
+    //                         className={"marker"}
+    //                         key={index}
+    //                         latitude={parseFloat(item[1])}
+    //                         longitude={parseFloat(item[2])}
+
+
+    //                         onClick={async (e) => {
+    //                             markerClickedHandler(
+    //                                 parseFloat(item[1]),
+    //                                 parseFloat(item[2]),
+    //                                 item[0]
+    //                             )
+
+    //                         }
+
+    //                         }
+    //                     >
+    //                     <div
+    //                         className={`markers ${viewport.zoom > 8 ? "" : (viewport.zoom < 5 ? "out-2" : " out")}`}
+    //                         style={divStyle(item[5].reduce((a, b) => a + b, 0))}
+    //                         onMouseOver={() => handleMarkerHover(item[0])}
+    //                         onMouseOut={() => setMarkerHover(null)}
+    //                         onClick={async (e) => {
+    //                             markerClickedHandler(
+    //                                 parseFloat(item[1]),
+    //                                 parseFloat(item[2]),
+    //                                 item[0],
+    //                                 item[3],
+    //                                 item[5]
+    //                             )
+
+    //                         }}
+    //                     >
+    //                         {/* {markerHover == item[0] &&  <div className="marker-span">{item[0]}</div>} */}
+    //                         {(viewport.zoom > 7 || showLabels) && <span className="marker-label" style={divStyle(item[5].reduce((a, b) => a + b, 0))}>{item[0]}</span>}
+    //                     </div>
+
+    //                 </Marker>
+
+
+    //             )
+    //         })
+
+    //     )
+    // }
 
     const renderMarkers = () => {
         return (
-            MountainInfo.map((item, index) => {
+            snowData.map((item, index) => {
+                // console.log(item.latitude)
+                // console.log(item.weather_reports)
+                let snowTotalArray = []
+                item.weather_reports.map(item => {
+                    snowTotalArray.push(item.precip_accumulation)
+                }
+                )
+                let tempArray = []
+                item.weather_reports.map(item => {
+                    tempArray.push(item.temperature_high)
+                }
+                )
+                let weatherIconArray = []
+                item.weather_reports.map(item => {
+                    weatherIconArray.push(item.icon)
+                }
+                )
+
 
                 return (
-                    (item[0].toLowerCase().includes(filter.name.toLowerCase())
-                        && item[5].reduce((a, b) => a + b, 0) >= value[0]
-                        && item[5].reduce((a, b) => a + b, 0) <= value[1]
-                        && item[4] >= tempValue[0]
-                        && item[4] <= tempValue[1]) && <Marker
-                            className={"marker"}
-                            key={index}
-                            latitude={parseFloat(item[1])}
-                            longitude={parseFloat(item[2])}
-                           
+                    // (item.ski_area_name.toLowerCase().includes(filter.name.toLowerCase())&&
+                    snowTotalArray.reduce((a, b) => a + b, 0) >= value[0]
+                    && snowTotalArray.reduce((a, b) => a + b, 0) <= value[1]
+                    // && item.weather_reports[0].temperature_high >= tempValue[0]
+                    // && item[4] <= tempValue[1]) 
+                    &&
+                    <Marker
+                        className={"marker"}
+                        key={index}
+                        latitude={item.latitude}
+                        longitude={item.longitude}
 
-                            onClick={async (e) => {
-                                markerClickedHandler(
-                                    parseFloat(item[1]),
-                                    parseFloat(item[2]),
-                                    item[0]
-                                )
+                        // markerClickedHandler = (lat, lon, name, snowTotal, snowForecast) 
+                        
+                    >
+                <div
+                    className={`markers ${viewport.zoom > 8 ? "" : (viewport.zoom < 5 ? "out-2" : " out")}`}
+                    style={divStyle(snowTotalArray.reduce((a, b) => a + b, 0))}
+                    // style={divStyle(10)}
 
-                            }
+                    // markerClickedHandler = (lat, lon, name, snowTotal, snowForecast) 
 
-                        }
-                        >
-                        <div
-                            className={`markers ${viewport.zoom > 8 ? "" : (viewport.zoom < 5 ? "out-2" : " out")}`}
-                            style={divStyle(item[5].reduce((a, b) => a + b, 0))}
-                            onMouseOver={() => handleMarkerHover(item[0])}
-                            onMouseOut={() => setMarkerHover(null)}
-                            onClick={async (e) => {
-                                markerClickedHandler(
-                                    parseFloat(item[1]),
-                                    parseFloat(item[2]),
-                                    item[0],
-                                    item[3],
-                                    item[5]
-                                )
+                    onClick={async (e) => {
+                        markerClickedHandler(
+                            item.latitude,
+                            item.longitude,
+                            item.ski_area_name,
+                            snowTotalArray.reduce((a, b) => a + b, 0),
+                            snowTotalArray,
+                            weatherIconArray
+                        )
 
-                            }}
-                        >
-                            {/* {markerHover == item[0] &&  <div className="marker-span">{item[0]}</div>} */}
-                            {(viewport.zoom > 7 || showLabels  ) && <span className="marker-label" style={divStyle(item[5].reduce((a, b) => a + b, 0))}>{item[0]}</span>}
-                        </div>
+                    }
+                    }
+                >
+                    {/* {markerHover == item[0] &&  <div className="marker-span">{item[0]}</div>} */}
+                    {(viewport.zoom > 7 || showLabels) && <span className="marker-label"
+                        // style={divStyle(item[5].reduce((a, b) => a + b, 0))}
+                        style={divStyle(snowTotalArray.reduce((a, b) => a + b, 0))}
+                    >
+                        {item.ski_area_name}</span>}
+                </div>
 
-                    </Marker>
+                    </Marker >
 
 
                 )
@@ -210,161 +287,70 @@ const Map = () => {
         )
     }
 
+// const changeViewPort = () => {
 
-    const changeViewPort = () => {
+//     const newport = {
+//         ...viewport,
+//         width: viewPortWidth(),
+//         height: viewPortHeight(),
 
-        const newport = {
-            ...viewport,
-            width: viewPortWidth(),
-            height: viewPortHeight(),
+//     }
+//     setViewport(newport)
+// }
 
-        }
-        setViewport(newport)
+
+
+const _onViewportChange = viewport => {
+    setViewport(viewport)
+}
+
+const viewWindowListener = () => {
+    setViewWidthValue(window.innerWidth);
+};
+
+const [snowData, setSnowData] = useState(null)
+
+
+
+
+useEffect(() => {
+    window.addEventListener('resize', viewWindowListener);
+    const apiCall = async () => {
+        const result = await axios(
+            'http://localhost:3001/v1/report/index',
+        );
+        console.log(result.data[0])
+        result.data[0] && setSnowData(result.data)
     }
+    apiCall()
+}, []);
 
-    useEffect(() => {
-        window.addEventListener("resize", changeViewPort)
-    //     await window.fetch('http://localhost:3001/v1/report/index')
-    //   .then(response => response.json())
-    //   .then(response => this.setState({ allExcerpts: response }))
-    //   .catch(error => console.log(error));
-
-    }, []);
-
-    const _onViewportChange = viewport => {
-        setViewport(viewport)
-    }
-
-    const viewWindowListener = () => {
-        setViewWidthValue(window.innerWidth);
-    };
-
-    useEffect(() => {
-        window.addEventListener('resize', viewWindowListener);
-    }, []);
-
-    const [viewWidthValue, setViewWidthValue] = useState(window.innerWidth);
+const [viewWidthValue, setViewWidthValue] = useState(window.innerWidth);
 
 
-    return (
-        <div className="App" >
-            <ReactMapGL
-                {...viewport}
-                className="react-map"
-                width={viewport.width}
-                height={viewport.height}
-                latitude={viewport.latitude}
-                longitude={viewport.longitude}
-                zoom={viewport.zoom}
-                mapStyle="mapbox://styles/bartconsedine/ck4cxmh5r3m8u1co20pckaesc"
-                mapboxApiAccessToken='pk.eyJ1IjoiYmFydGNvbnNlZGluZSIsImEiOiJjazBudWVxajUwMXdlM2hwZzFzcDQ5cWR5In0.376OjUpSFMy-y-PVfAeO9A'
-                onViewportChange={_onViewportChange}
-                dragPan={mapStatic}
-                scrollZoom={mapStatic}
-                minZoom={2}
-            >
-                {renderMarkers()}
-                {viewWidthValue > 700 &&
-                    <div className="side-selected">
-
-                        <div
-                            className="map-side"
-                            onMouseOver={() => setMapStatic(false)}
-                            onMouseOut={() => setMapStatic(true)}>
-                            <div>
-                                <Filter
-                                    filter={filter}
-                                    handleFilterChange={handleFilterChange}
-                                    value={value}
-                                    handleSliderChange={handleSliderChange}
-                                    tempValue={tempValue}
-                                    handleTempChange={handleTempChange}
-                                    setShowLabels={setShowLabels}
-                                    showLabels={showLabels}
-                                />
-                            </div>
-                            <div>
-                                <Sidebar
-                                    markerClickedHandler={markerClickedHandler}
-                                    MountainInfo={MountainInfo}
-                                    filter={filter}
-                                    value={value}
-                                    tempValue={tempValue}
-                                />
-                            </div>
-                        </div>
-
-                        {( viewWidthValue > 700) &&
-                            <div className="selected-container">
-                                <Selected
-                                    popup={popup}
-                                    setPopup={setPopup}
-                                    setViewport={setViewport}
-                                    viewport={viewport}
-                                    viewWidthValue={viewWidthValue}
-                                />
-                                <GeoToggle
-                                    viewport={viewport}
-                                    setViewport={setViewport}
-                                />
-
-                            </div>
-
-                        }
-
-                    </div>}
-
-                {popup.latitude &&
-                    <Popup
-                        className="popup"
-                        latitude={popup.latitude}
-                        longitude={popup.longitude}
-                        offsetLeft={16}
-                        // offsetTop={-10}
-                        onClose={() => {
-                            const clickedMarker = {
-                                latitude: null,
-                                longitude: null,
-                                name: null
-
-                            }
-                            setPopup(clickedMarker)
-                            const zoomValue = (viewport.zoom > 5.5 ? 5.5 : viewport.zoom)
-
-                            const newport = {
-                                ...viewport,
-                                zoom: zoomValue,
-
-                            }
-                            setViewport(newport)
-                        }
-                        }
-                    >
-
-                        <div><strong>{popup.name}</strong></div>
-                        <div>7 Day Snow Forecast:<strong> {popup.snowForecast.reduce((a, b) => a + b, 0)}"</strong></div>
-
-                    </Popup>}
-
-            </ReactMapGL>
-            {(popup.name && viewWidthValue < 700)  &&
-                        <div className="selected-container sc-mobile">
-                            <SelectedMobile
-                                popup={popup}
-                                setPopup={setPopup}
-                                setViewport={setViewport}
-                                viewport={viewport}
-                            />
-
-                        </div>
-
-                    }
-
-            {viewWidthValue <= 700 &&
-                <div className="side-selected ss-mobile">
+return (
+    <div className="App" >
+        <ReactMapGL
+            {...viewport}
+            className="react-map"
+            width={viewport.width}
+            height={viewport.height}
+            latitude={viewport.latitude}
+            longitude={viewport.longitude}
+            zoom={viewport.zoom}
+            mapStyle="mapbox://styles/bartconsedine/ck4cxmh5r3m8u1co20pckaesc"
+            mapboxApiAccessToken='pk.eyJ1IjoiYmFydGNvbnNlZGluZSIsImEiOiJjazBudWVxajUwMXdlM2hwZzFzcDQ5cWR5In0.376OjUpSFMy-y-PVfAeO9A'
+            onViewportChange={_onViewportChange}
+            dragPan={mapStatic}
+            scrollZoom={mapStatic}
+            minZoom={2}
+        >
+            {snowData && renderMarkers()}
+            {viewWidthValue > 700 &&
+                <div className="side-selected">
 
                     <div
-                        className="map-side ms-mobile"
+                        className="map-side"
                         onMouseOver={() => setMapStatic(false)}
                         onMouseOut={() => setMapStatic(true)}>
                         <div>
@@ -375,25 +361,124 @@ const Map = () => {
                                 handleSliderChange={handleSliderChange}
                                 tempValue={tempValue}
                                 handleTempChange={handleTempChange}
+                                setShowLabels={setShowLabels}
+                                showLabels={showLabels}
                             />
                         </div>
                         <div>
-                            <Sidebar
+                            {snowData && <Sidebar
                                 markerClickedHandler={markerClickedHandler}
                                 MountainInfo={MountainInfo}
                                 filter={filter}
                                 value={value}
                                 tempValue={tempValue}
-                            />
+                                snowData={snowData}
+                            />}
                         </div>
                     </div>
 
+                    {(viewWidthValue > 700) &&
+                        <div className="selected-container">
+                            <Selected
+                                popup={popup}
+                                setPopup={setPopup}
+                                setViewport={setViewport}
+                                viewport={viewport}
+                                viewWidthValue={viewWidthValue}
 
+
+                            />
+                            <GeoToggle
+                                viewport={viewport}
+                                setViewport={setViewport}
+                            />
+
+                        </div>
+
+                    }
 
                 </div>}
 
-        </div>
-    );
+            {popup.latitude &&
+                <Popup
+                    className="popup"
+                    latitude={popup.latitude}
+                    longitude={popup.longitude}
+                    offsetLeft={16}
+                    // offsetTop={-10}
+                    onClose={() => {
+                        const clickedMarker = {
+                            latitude: null,
+                            longitude: null,
+                            name: null
+
+                        }
+                        setPopup(clickedMarker)
+                        const zoomValue = (viewport.zoom > 5.5 ? 5.5 : viewport.zoom)
+
+                        const newport = {
+                            ...viewport,
+                            zoom: zoomValue,
+
+                        }
+                        setViewport(newport)
+                    }
+                    }
+                >
+
+                    <div><strong>{popup.name}</strong></div>
+                    <div>7 Day Snow Forecast:<strong> {popup.snowForecast.reduce((a, b) => a + b, 0)}"</strong></div>
+
+                </Popup>}
+
+        </ReactMapGL>
+        {(popup.name && viewWidthValue < 700) &&
+            <div className="selected-container sc-mobile">
+                <SelectedMobile
+                    popup={popup}
+                    setPopup={setPopup}
+                    setViewport={setViewport}
+                    viewport={viewport}
+                />
+
+            </div>
+
+        }
+
+        {viewWidthValue <= 700 &&
+            <div className="side-selected ss-mobile">
+
+                <div
+                    className="map-side ms-mobile"
+                    onMouseOver={() => setMapStatic(false)}
+                    onMouseOut={() => setMapStatic(true)}>
+                    <div>
+                        <Filter
+                            filter={filter}
+                            handleFilterChange={handleFilterChange}
+                            value={value}
+                            handleSliderChange={handleSliderChange}
+                            tempValue={tempValue}
+                            handleTempChange={handleTempChange}
+                        />
+                    </div>
+                    <div>
+                        <Sidebar
+                            markerClickedHandler={markerClickedHandler}
+                            MountainInfo={MountainInfo}
+                            filter={filter}
+                            value={value}
+                            tempValue={tempValue}
+                        />
+                    </div>
+                </div>
+
+
+
+            </div>}
+
+    </div>
+);
 }
 
 export default Map;
