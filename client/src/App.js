@@ -54,12 +54,12 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    await window.fetch('/api/excerpts')
-      .then(response => response.json())
-      .then(response => this.setState({ allExcerpts: response }))
-      .catch(error => console.log(error));
-    const filteredExcerpt = this.state.allExcerpts.filter((item) => item.author === this.state.filterData.author && item.title === this.state.filterData.title && item.chapter === this.state.filterData.chapter)
-    // await this.setState({
+    // await window.fetch('/api/excerpts')
+    //   .then(response => response.json())
+    //   .then(response => this.setState({ allExcerpts: response }))
+    //   .catch(error => console.log(error));
+    // const filteredExcerpt = this.state.allExcerpts.filter((item) => item.author === this.state.filterData.author && item.title === this.state.filterData.title && item.chapter === this.state.filterData.chapter)
+    // // await this.setState({
     //   excerptData: {
     //     ...filteredExcerpt[0]
     //   }

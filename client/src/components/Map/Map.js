@@ -226,7 +226,14 @@ const Map = () => {
     }, []);
 
     const _onViewportChange = viewport => {
-        setViewport(viewport)
+
+        const newport = {
+            ...viewport,
+            width: viewPortWidth(),
+            height: viewPortHeight(),
+
+        }
+        setViewport(newport)
     }
 
     const viewWindowListener = () => {
@@ -255,6 +262,7 @@ const Map = () => {
                 onViewportChange={_onViewportChange}
                 dragPan={mapStatic}
                 scrollZoom={mapStatic}
+                pitch={60}
                 minZoom={2}
             >
                 {renderMarkers()}
