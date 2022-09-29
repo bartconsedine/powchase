@@ -24,7 +24,7 @@
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^4.8.1",
-    "d3": "^5.14.2",
+    "d3": "^7.6.1",
     "d3-ease": "^1.0.6",
     "lodash.range": "^3.2.0",
     "react-dom": "^16.12.0",
